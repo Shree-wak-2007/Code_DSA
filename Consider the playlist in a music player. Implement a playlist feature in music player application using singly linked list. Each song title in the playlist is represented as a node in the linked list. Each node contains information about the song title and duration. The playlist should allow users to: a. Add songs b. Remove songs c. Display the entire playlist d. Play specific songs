@@ -1,0 +1,133 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct Node{
+    char name[50];
+    struct Node *next;
+};
+
+
+struct Node* head = NULL;
+
+void adds()
+{
+    char key[50];
+        struct Node* newnode;
+        newnode = (struct Node*)malloc(sizeof(struct Node));
+        printf("\nenter name of song ; -  ");
+        scanf("%s",key);
+        strcpy(newnode->name , key);
+        newnode->next = NULL;
+    if(head==NULL)
+    {
+        head = newnode;
+    }
+    else
+    {
+        struct Node* temp = head;
+        while(temp->next!=NULL)
+            {
+                temp=temp->next;
+            }
+        newnode= (struct Node* )malloc(sizeof(struct Node));
+        
+        strcpy(newnode->name , key);       
+        newnode->next=NULL;
+        temp->next = newnode;
+    }
+}
+
+void removesong()
+{
+    if(head==NULL)
+    {
+        printf("\nList empty");
+    }
+        else if (head->next==NULL)
+        {
+            free(head);
+            printf("\nhead removed");
+        }
+    else
+    {
+        struct Node* temp = head;
+        struct Node* del = temp->next;
+        while(del->next != NULL)
+            {
+                del = del->next;
+                temp = temp->next;
+            }
+        temp->next =NULL;
+        del->next=NULL;
+    }
+}
+void display(){
+        struct Node* temp = head;
+    if(head==NULL)
+    {
+        printf("\nlist empty");
+    }
+    else{
+        while(temp != NULL)
+            {
+                printf("\n%s",temp->name);
+                temp=temp->next;
+            }
+    }
+}
+
+void specific()
+{
+    char key[50];
+    struct Node* temp = head;
+    int counter = 0;
+    if(head==NULL)
+    {
+        printf("\nlist empty");
+    }
+    else
+    {
+        printf("\nenter song name - : ");
+        scanf("%s",key);
+        while(temp->next !=NULL)
+            {
+            if(strcmp(temp->name , key)==1)
+            {
+                printf("\n%s song found !",key);
+                printf("\n %d at this position",counter+1);
+            }
+                temp=temp->next;
+                counter ++;
+        }
+    }
+}
+int main(){
+    int ch;
+    while(ch!=5){
+    printf("\nenter choice : = \n1 - add song\n2 - remove song\n3 - display entire playlist \n4 - play specific song \n");
+    scanf("%d",&ch);
+    
+    switch(ch)
+        {
+            case 1:
+                adds();
+                break;
+            case 2:
+                removesong();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                specific();
+                break;
+          
+            default:
+                printf("wrong output !!");
+                break;
+        }
+    }
+    return 0;
+}
